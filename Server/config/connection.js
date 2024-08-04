@@ -1,8 +1,4 @@
 const { connect, connection } = require("mongoose");
 
-connect("mongodb://localhost/shopify-db", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
+connect("mongodb://localhost/shopify-db", {});
 module.exports = connection;
