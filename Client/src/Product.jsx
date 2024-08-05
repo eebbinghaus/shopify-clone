@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
-const User = () => {
+const Product = () => {
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState(0);
-    const [users, setUsers] = useState([]);
+    const [price, setPrice] = useState(0);
+    const [descrip, setDescrip] = useState("");
+    const [products, setProducts] = useState([]);
 
     const handleSubmit = () => {
-        Axios.post("http://localhost:3001/api/users", {
-            username: name,
-            email: email,
-            phone: phone,
+        Axios.post("http://localhost:3001/api/products", {
+            name: name,
+            price: price,
+            description: descrip,
         });
         console.log(name);
     };
 
     useEffect(() => {
-        Axios.get("http://localhost:3001/api/users")
+        Axios.get("http://localhost:3001/api/products")
             .then((res) => {
                 console.log("page refresh");
                 console.log(res.data);
-                setUsers(res.data);
+                setProducts(res.data);
             })
             .catch((err) => {
                 console.error(err);
@@ -29,14 +29,14 @@ const User = () => {
     }, []);
 
     const handleDelete = (id) => {
-        Axios.delete(`http://localhost:3001/api/users/${id}`);
+        Axios.delete(`http://localhost:3001/api/products/${id}`);
     };
 
     return (
         <>
             <div className="form-container">
                 <form onSubmit={handleSubmit}>
-                    <h2>Create a new User</h2>
+                    <h2>Create a new Product</h2>
                     <p>Name:</p>
                     <input
                         type="text"
@@ -45,43 +45,43 @@ const User = () => {
                             setName(e.target.value);
                         }}
                     />
-                    <p>Email:</p>
+                    <p>Price:</p>
                     <input
                         type="text"
-                        placeholder="Enter email ..."
+                        placeholder="Enter price ..."
                         onChange={(e) => {
-                            setEmail(e.target.value);
+                            setPrice(e.target.value);
                         }}
                     />
-                    <p>Phone:</p>
+                    <p>Description:</p>
                     <input
                         type="text"
-                        placeholder="Enter phone number ..."
+                        placeholder="Enter description ..."
                         onChange={(e) => {
-                            setPhone(e.target.value);
+                            setDescrip(e.target.value);
                         }}
                     />
                     <br />
-                    <button type="submit">Add User</button>
+                    <button type="submit">Add Product</button>
                 </form>
             </div>
             <div className="list-container">
-                <h2>List of Users</h2>
+                <h2>List of Products</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
+                            <th>Price</th>
+                            <th>Phone Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, _) => {
+                        {products.map((product, _) => {
                             return (
-                                <tr key={user._id}>
-                                    <td>{user.username}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
+                                <tr key={product._id}>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.description}</td>
                                     <td>
                                         <button
                                             onClick={() =>
@@ -101,4 +101,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default Product;
