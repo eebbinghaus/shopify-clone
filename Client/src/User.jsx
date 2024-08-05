@@ -8,6 +8,7 @@ const User = () => {
     const [users, setUsers] = useState([]);
 
     const handleSubmit = () => {
+        
         Axios.post("http://localhost:3001/api/users", {
             username: name,
             email: email,
@@ -19,6 +20,7 @@ const User = () => {
     useEffect(() => {
         Axios.get("http://localhost:3001/api/users")
             .then((res) => {
+                console.log("page refresh");
                 console.log(res.data);
                 setUsers(res.data);
             })
