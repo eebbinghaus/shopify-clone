@@ -29,7 +29,13 @@ const Product = () => {
     }, []);
 
     const handleDelete = (id) => {
-        Axios.delete(`http://localhost:3001/api/products/${id}`);
+        Axios.delete(`http://localhost:3001/api/products/${id}`)
+            .then(() => {
+                return Axios.get("http://localhost:3001/api/products");
+            })
+            .then((res) => {
+                setProducts(res.data);
+            });
     };
 
     return (
